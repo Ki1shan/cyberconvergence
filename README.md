@@ -10,4 +10,5 @@ A Flask-based automated scanner that detects common web vulnerabilities like XSS
    2. Cyber Threat Intelligence (CTI) Dashboard
 A Flask + MongoDB dashboard that investigates IPs/domains using VirusTotal and AbuseIPDB APIs. Built for threat analysts to quickly query, track, and visualize IOC data.
 
-
+Detailed explaination metioned in their respective files README.md file.
+Also refer the webvulscan and CTID 
