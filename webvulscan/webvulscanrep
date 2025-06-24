@@ -1,0 +1,136 @@
+WEB APPLICATION VULNERABILITY SCANNER:
+--------------------------------------
+
+-----------------
+PROJECT OVERVIEW:
+-----------------
+This project presents a custom-built Web Application Vulnerability Scanner developed using 'Python', 'Flask', 'Selenium', and 'BeautifulSoup'. It automates the detection of web vulnerabilities focusing on the 'OWASP Top 10'. This tool is designed for ethical hackers, penetration testers, and security researchers to scan and identify three critical classes of vulnerabilities:
+
+1. Cross-Site Scripting (XSS): Injects malicious scripts into web pages viewed by users, exploiting client-side scripts.
+
+2. SQL Injection (SQLi): Manipulates database queries via user inputs, potentially exposing or modifying data.
+
+3. Cross-Site Request Forgery (CSRF): Tricks authenticated users into submitting unwanted requests to a web application.
+
+The scanner uses headless browser automation to simulate real-world user interactions and identify potential security flaws. It is particularly useful for penetration testers, cybersecurity enthusiasts, and developers interested in web application security.
+
+This tool features a Flask-based web interface, logs all results in both JSON and HTML format, and presents a downloadable report for documentation.
+
+------------------------
+SETUP AND INSTALLATIONS:
+------------------------
+INSTALL REQUIRED TOOLS:
+-> Install Firefox and Geckodriver:
+   # sudo apt install firefox-esr geckodriver -y
+-> Create a Virtual Environment:
+   # python3 -m venv env
+-> Install Python Dependencies
+   # pip install -r requirements.txt
+
+-------------------
+USAGE INSTRUCTIONS:
+-------------------
+1. LAUNCH THE WEB INTERFACE:
+   # source env/bin/activate
+   # python run.py
+
+2. SCAN THE TARGET:
+   -> Navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+   -> Input a target URL (e.g., [http://testphp.vulnweb.com](http://testphp.vulnweb.com))
+   -> Click the Scan button
+
+3. REVIEW VULNERABILITY RESULTS:
+   -> XSS, SQLi, and CSRF results are displayed in categorized sections.
+   -> Payloads used and affected URLs are shown.
+
+4. VIEW RESULTS:
+   -> XSS : Injected scripts and reflected content.
+   -> SQLi : URL manipulations and database errors.
+   -> CSRF : Forms lacking CSRF tokens.
+
+5. EXPORT THE REPORT:
+   -> Click download full report
+   -> Downloads scan\_report.html containing all findings
+
+-----------------------------
+DETECTION LOGIC EXPLAINATION:
+-----------------------------
+1. XSS DETECTION:
+   -> Crawls all forms using BeautifulSoup
+   -> Injects XSS payloads (e.g., <script>alert(1)</script>)
+   -> Submits the form and checks for payload reflection or alert triggers
+   -> Uses Selenium to simulate interaction with JavaScript-enabled pages
+
+2. SQL INJECTION DETECTION:
+   -> Appends common SQLi payloads to parameters (e.g., id=' OR '1'='1)
+   -> Analyzes returned content for SQL error keywords (e.g., mysql, syntax error)
+   -> If found, marks the page as vulnerable
+
+3. CSRF DETECTION:
+   -> Scans all forms and checks for the presence of common CSRF tokens (e.g., csrf\_token, authenticity\_token)
+   -> Flags any POST form that lacks a proper anti-CSRF token field
+
+--------------------------------
+UI FEATURES AND WEB APPLICATION:
+--------------------------------
+1. WEB UI ELEMENTS:
+   -> Dark-themed, responsive interface using HTML and CSS
+   -> Input field for the target URL
+   -> Categorized vulnerability sections: XSS, SQLi, CSRF
+   -> Payloads and URLs shown in detailed format
+   -> Exportable HTML report with all findings
+
+2. HTML REPORT:
+   -> Vulnerabilities grouped by category
+   -> Clearly marked payloads and affected URLs
+   -> Easy to print or attach to submissions
+
+--------------------------
+SAMPLE TARGET FOR TESTING:
+--------------------------
+The following site for testing and demonstration:
+"[http://testphp.vulnweb.com](http://testphp.vulnweb.com)"
+
+Examples:
+-> SQLi: [http://testphp.vulnweb.com/artists.php?id=](http://testphp.vulnweb.com/artists.php?id=)' OR '1'='1
+-> XSS: [http://testphp.vulnweb.com/artists.php?artist=](http://testphp.vulnweb.com/artists.php?artist=)<script>alert(1)</script>
+(This site is intentionally vulnerable and widely used for ethical hacking exercises.)
+
+----------------
+FEATURE SUMMARY:
+----------------
+1. XSS Detection
+   -> Injects and verifies script payloads in forms and URLs.
+
+2. SQL Injection Detection
+   -> Detects input-based SQL flaws using error responses and fallback payloads.
+
+3. CSRF Detection
+   -> Scans POST forms for missing anti-CSRF tokens.
+
+4. Headless Automation
+   -> Uses Firefox with Selenium to scan without opening a visible browser.
+
+5. Web UI
+   -> Flask interface with input box, scan button, categorized results.
+
+6. HTML+JSON Reporting
+   -> Generates downloadable .html reports and logs JSON results.
+
+7. HTTPS Compatibility
+   -> Supports scanning of sites using SSL (via verify=False in requests)
+
+--------------------
+FUTURE IMPROVEMENTS:
+--------------------
+-> Add authenticated session support (login forms)
+-> PDF report export
+-> Encoded payloads for WAF bypass
+-> Recursive crawler for deep scanning of linked pages
+
+-----------
+CONCLUSION:
+-----------
+-> This vulnerability scanner simulates real-world attack patterns and provides automated detection for the most common web flaws.
+-> It’s ideal for learning, testing, and even integrating into larger security toolkits.
+

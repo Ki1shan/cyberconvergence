@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kali Web Vulnerability Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            padding: 20px;
+        }
+        h1 {
+            color: #58a6ff;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            background-color: #161b22;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2ea043;
+        }
+        .section {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #21262d;
+            border-left: 4px solid #58a6ff;
+        }
+        .xss li {
+            border-left-color: #ff7b72;
+        }
+        .sqli li {
+            border-left-color: #f2cc60;
+        }
+        .csrf li {
+            border-left-color: #ffa657;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kali Web Vulnerability Scanner</h1>
+
+    <form method="post">
+        <label for="url">Target URL:</label><br>
+        <input type="text" name="url" id="url" placeholder="http://target.com/page" required>
+        <button type="submit">🔍 Scan</button>
+    </form>
+
+    {% if results.xss or results.sqli or results.csrf %}
+        <div style="margin-top: 20px;">
+            <a href="/report" download>
+                <button style="background-color: #8250df;">
+                    🖨️ Download Full Report
+                </button>
+            </a>
+        </div>
+
+        <div class="section xss">
+            <h2>🔴 XSS Vulnerabilities</h2>
+            {% if results.xss %}
+                <ul>
+                    {% for r in results.xss %}
+                        <li><b>URL:</b> {{ r.url }}<br><b>Payload:</b> {{ r.payload }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No XSS vulnerabilities found.</p>
+            {% endif %}
+        </div>
+
+        <div class="section sqli">
+            <h2>🟡 SQL Injection Vulnerabilities</h2>
+            {% if results.sqli %}
+                <ul>
+                    {% for r in results.sqli %}
+                        <li><b>URL:</b> {{ r.url }}<br><b>Payload:</b> {{ r.payload }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No SQL Injection vulnerabilities found.</p>
+            {% endif %}
+        </div>
+
+        <div class="section csrf">
+            <h2>🟠 CSRF Vulnerabilities</h2>
+            {% if results.csrf %}
+                <ul>
+                    {% for r in results.csrf %}
+                        <li><b>Form URL:</b> {{ r.url }}<br><b>Issue:</b> {{ r.payload }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No CSRF vulnerabilities found.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
+
