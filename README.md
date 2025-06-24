@@ -1,7 +1,7 @@
 # cyberconvergence
  offensive + defensive tools converge
 
-This repository contains two cybersecurity-focused projects developed using Python and Kali Linux. Both projects are self-contained, well-documented, and built for hands-on penetration testing and threat analysis.
+This repository contains two cybersecurity-focused projects developed using Python, HTML. Both projects are self-contained, well-documented, and built for hands-on penetration testing and threat analysis.
 
 ##  Projects Included
    1. Web Application Vulnerability Scanner
